@@ -1,0 +1,218 @@
+
+/* =====================================================================
+   Motion layer. Adds movement and hover response only; it does not change
+   layout, colour or type at rest. Everything is inside the no-preference
+   media query, and the .mo class is only set when the visitor allows motion.
+   ===================================================================== */
+@property --lo { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+:root {
+  --mo-glint: rgba(200,150,50,1);
+  --mo-text-base: linear-gradient(var(--ink), var(--ink));
+  --mo-light: 214,168,74;  --mo-light-a: .1;
+  --mo-spot: rgba(214,168,74,.16);
+  --mo-hov: rgba(165,116,28,.85);
+  --mo-card-shadow: rgba(110,76,14,.45);
+  --mo-card-inset: 0 0 0 0 transparent;
+  --mo-progress: linear-gradient(90deg,#8A5E12,#D9A93E 55%,#A5741C);
+  --mo-amb1: rgba(214,168,74,.12);  --mo-amb2: rgba(165,116,28,.08);
+  --mo-sheen: rgba(255,244,214,.55);  --mo-sheen-blend: overlay;  --mo-sweep: rgba(255,246,222,.5);
+  --mo-shine: rgba(255,244,214,.5);   --mo-shine-ghost: rgba(214,168,74,.3);
+  --mo-btn-hover-shadow: 0 16px 28px -12px rgba(110,76,14,.6);
+  --mo-focus: rgba(165,116,28,.22);
+  --mo-frame: rgba(255,255,255,.85);
+  --mo-glow: rgba(214,168,74,.55);
+  --mo-nav-shadow: rgba(60,44,18,.5);
+  --mo-rip: rgba(255,255,255,.35);  --mo-rip-ghost: rgba(165,116,28,.22);
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+
+@keyframes mo-rise  { from { opacity: 0; transform: translateY(18px); } }
+@keyframes mo-focus { from { opacity: 0; transform: translateY(14px); filter: blur(5px); } }
+@keyframes mo-sheet { from { opacity: 0; transform: translateY(36px) scale(.985); } }
+@keyframes mo-rule  { from { clip-path: inset(-12px 50% -12px 50%); } to { clip-path: inset(-12px 0 -12px 0); } }
+@keyframes mo-glint { from { background-position: 135% 0, 0 0; } to { background-position: -35% 0, 0 0; } }
+@keyframes mo-hero  { from { opacity: 0; transform: perspective(1200px) scale(1.14); filter: blur(8px); } }
+@keyframes mo-sweep { from { transform: translateX(-130%) skewX(-18deg); } to { transform: translateX(560%) skewX(-18deg); } }
+@keyframes mo-bump  { from { opacity: 0; transform: translateY(-.35em); } }
+@keyframes mo-pop   { 45% { transform: scale(.955); } }
+@keyframes mo-rip   { to { transform: scale(1); opacity: 0; } }
+@keyframes mo-float { 50% { transform: translateY(-4px); } }
+@keyframes mo-drift { to { transform: translate3d(4%, 3%, 0) scale(1.08); } }
+@keyframes mo-fade  { from { opacity: 0; } }
+@keyframes mo-zoom  { from { opacity: 0; transform: scale(.94); } }
+
+/* ---------- Ambient light behind the page (shows in the margins on wide screens) ---------- */
+.mo body::before {
+  content: ""; position: fixed; inset: -25%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(38% 32% at 18% 22%, var(--mo-amb1), transparent 70%),
+    radial-gradient(34% 38% at 82% 72%, var(--mo-amb2), transparent 70%);
+  animation: mo-drift 28s ease-in-out infinite alternate;
+}
+
+/* ---------- Navigation ---------- */
+.mo .nav { transition: box-shadow .5s; }
+.mo .nav.scrolled { box-shadow: 0 14px 30px -22px var(--mo-nav-shadow); }
+.mo .nav::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none;
+  background: var(--mo-progress); transform-origin: 0 50%; transform: scaleX(var(--p, 0));
+}
+.mo .logo img { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.mo .logo:hover img, .mo .logo:focus-visible img { transform: scale(1.1) rotate(-3deg); }
+.mo .links a { position: relative; }
+.mo .links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: 100% 50%; transition: transform .55s cubic-bezier(.2,.7,.2,1);
+}
+.mo .links a:hover, .mo .links a:focus-visible { border-bottom-color: transparent; }
+.mo .links a:hover::after, .mo .links a:focus-visible::after, .mo .links a.on::after { transform: scaleX(1); transform-origin: 0 50%; }
+
+/* ---------- Opening card ---------- */
+.hero-art { position: relative; overflow: hidden; line-height: 0; }
+.hero-art > img {
+  /* rest state is the artwork exactly as supplied; scale only grows with hover or scroll, enough to cover the drift */
+  transform: perspective(1200px) rotateY(calc(var(--hx, 0) * 1.2deg)) rotateX(calc(var(--hy, 0) * -1.2deg))
+             translate3d(calc(var(--hx, 0) * -5px), calc(var(--hy, 0) * -5px + var(--hs, 0) * 10px), 0)
+             scale(calc(1 + var(--so, 0) * .03 + var(--hs, 0) * .04));
+  transition: transform 1s cubic-bezier(.2,.7,.2,1); will-change: transform;
+}
+.mo .hero-art > img { animation: mo-hero 2s cubic-bezier(.16,.8,.24,1) backwards; }
+.hero-sheen {
+  position: absolute; inset: 0; pointer-events: none; mix-blend-mode: var(--mo-sheen-blend);
+  opacity: var(--so, 0); transition: opacity .7s;
+  background: radial-gradient(circle 320px at var(--gx, 50%) var(--gy, 35%), var(--mo-sheen), transparent 70%);
+}
+.hero-art::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 30%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, var(--mo-sweep), transparent);
+  transform: translateX(-130%) skewX(-18deg); animation: mo-sweep 2.4s cubic-bezier(.4,.1,.2,1) 1.2s 1 both;
+}
+.mo .hero-foot > .kicker { animation: mo-rise 1s cubic-bezier(.16,.8,.24,1) 1s backwards; }
+.mo .hero-foot > .countdown { animation: mo-rise 1s cubic-bezier(.16,.8,.24,1) 1.15s backwards; }
+.mo .hero-foot > .btn-row { animation: mo-rise 1s cubic-bezier(.16,.8,.24,1) 1.3s backwards; }
+.countdown b.bump { animation: mo-bump .6s cubic-bezier(.16,.8,.24,1); }
+
+/* ---------- Sheets: rise into place, frame closes in, content staggers ---------- */
+.mo .sheet:not(.hero):not(.in) { opacity: 0; }
+.mo .sheet.in:not(.hero) { animation: mo-sheet 1.1s cubic-bezier(.16,.8,.24,1) backwards; }
+.mo .sheet:not(.hero)::before { transition: inset 1.4s cubic-bezier(.16,.8,.24,1) .15s, opacity 1.1s .15s; }
+.mo .sheet:not(.hero)::after  { transition: inset 1.7s cubic-bezier(.16,.8,.24,1) .25s, opacity 1.3s .25s; }
+.mo .sheet:not(.hero):not(.in)::before { inset: 46px; opacity: 0; }
+.mo .sheet:not(.hero):not(.in)::after  { inset: 60px; opacity: 0; }
+
+.mo .sheet.in > h2 { animation: mo-focus 1s cubic-bezier(.16,.8,.24,1) 90ms backwards; }
+.mo .sheet.in > .short-rule { animation: mo-rule 1.1s cubic-bezier(.16,.8,.24,1) 200ms backwards; }
+.mo .sheet.in :is(.sheet > .kicker, .sheet > .short-rule, .sheet > .lead, .sheet > .dress, .sheet > .btn-row, .sheet > .empty, .sheet > .note) { animation: mo-rise .95s cubic-bezier(.16,.8,.24,1) var(--d, 0ms) backwards; }
+.mo .sheet.in > .kicker { --d: 0ms; }
+.mo .sheet.in > .lead { --d: 170ms; }
+.mo .sheet.in > .btn-row { --d: 480ms; }
+.mo .sheet.in > .empty { --d: 320ms; }
+.mo .sheet.in > .dress { --d: 620ms; }
+.mo .sheet.in > .note { --d: 700ms; }
+.mo .sheet.in :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *) { animation: mo-rise .95s cubic-bezier(.16,.8,.24,1) calc(var(--b, 320ms) + var(--i, 0) * var(--step, 110ms)) backwards; }
+.mo .sheet .form > * { --step: 70ms; }
+.mo .sheet .route-list > li { --step: 90ms; }
+.mo .sheet .gallery > button { --step: 45ms; --b: 240ms; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(2) { --i: 1; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(3) { --i: 2; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(4) { --i: 3; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(5) { --i: 4; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(6) { --i: 5; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(7) { --i: 6; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(8) { --i: 7; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(9) { --i: 8; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(10) { --i: 9; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(11) { --i: 10; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(12) { --i: 11; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(13) { --i: 12; }
+.mo .sheet :is(.events > .event, .form > *, .cards > .card, .route-list > li, .venue > *, .gallery > button, .done > *):nth-child(14) { --i: 13; }
+
+/* Brushed-metal / gold glint that crosses headings once as they arrive. Invisible at rest. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  @media (forced-colors: none) {
+    .mo h2, .mo .event .time, .mo .venue .name {
+      background-image: linear-gradient(100deg, transparent 40%, var(--mo-glint) 50%, transparent 60%), var(--mo-text-base);
+      background-size: 260% 100%, 100% 100%; background-repeat: no-repeat; background-position: 135% 0, 0 0;
+      -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+    }
+    .mo .sheet.in > h2 { animation: mo-focus 1s cubic-bezier(.16,.8,.24,1) 90ms backwards, mo-glint 1.9s ease-in-out 800ms backwards; }
+    .mo .sheet.in .event .time, .mo .sheet.in .venue .name { animation: mo-glint 1.9s ease-in-out calc(var(--b, 320ms) + var(--i, 0) * 110ms + 600ms) backwards; }
+  }
+}
+
+/* Pointer light that follows the cursor across the paper (desktop) */
+.sheet { transition: --lo .8s ease; }
+.sheet > .mo-light {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(460px circle at var(--lx, 50%) var(--ly, 30%), rgba(var(--mo-light), calc(var(--lo) * var(--mo-light-a))), transparent 70%);
+}
+
+.mo .sheet.pr { background-position: right calc(var(--sy, 0) * -10px) top calc(var(--sy, 0) * -14px); }
+.mo .sheet.pl { background-position: left calc(var(--sy, 0) * -10px) bottom calc(var(--sy, 0) * -14px); }
+
+
+/* ---------- Buttons ---------- */
+.mo .btn {
+  position: relative; overflow: hidden; isolation: isolate;
+  transform: translate3d(var(--bx, 0px), var(--by, 0px), 0);
+  transition: background .3s, color .3s, filter .3s, box-shadow .5s, transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.mo .btn::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 55%; pointer-events: none; z-index: -1;
+  background: linear-gradient(100deg, transparent, var(--mo-shine), transparent); transform: translateX(-140%) skewX(-18deg);
+}
+.mo .btn.ghost::after { background: linear-gradient(100deg, transparent, var(--mo-shine-ghost), transparent); }
+.mo .btn:active { transform: translate3d(var(--bx, 0px), 0, 0) scale(.985); transition-duration: .12s; }
+.btn .rip { position: absolute; border-radius: 50%; pointer-events: none; transform: scale(0); background: var(--mo-rip); animation: mo-rip .7s ease-out forwards; }
+.btn.ghost .rip { background: var(--mo-rip-ghost); }
+@media (hover: hover) {
+  .mo .btn:hover { transform: translate3d(var(--bx, 0px), calc(var(--by, 0px) - 2px), 0); box-shadow: var(--mo-btn-hover-shadow); }
+  .mo .btn.ghost:hover { box-shadow: 0 12px 24px -16px var(--mo-card-shadow); }
+  .mo .btn:hover::after { transition: transform .95s cubic-bezier(.2,.7,.2,1); transform: translateX(300%) skewX(-18deg); }
+}
+
+/* ---------- Cards ---------- */
+.mo .card { position: relative; transition: transform .6s cubic-bezier(.2,.7,.2,1), border-color .4s, box-shadow .6s; }
+.mo .card::before {
+  content: ""; position: absolute; inset: -1px; pointer-events: none; opacity: 0; transition: opacity .5s;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), var(--mo-spot), transparent 70%);
+}
+@media (hover: hover) {
+  .mo .card:hover { transform: translateY(-4px); border-color: var(--mo-hov); box-shadow: 0 18px 34px -22px var(--mo-card-shadow), var(--mo-card-inset); }
+  .mo .card:hover::before { opacity: 1; }
+}
+
+/* ---------- Form ---------- */
+.mo input[type=text], .mo input[type=tel], .mo select, .mo textarea { transition: border-color .3s, background .3s, box-shadow .45s; }
+.mo input:focus-visible, .mo select:focus-visible, .mo textarea:focus-visible { box-shadow: 0 0 0 4px var(--mo-focus); }
+.mo .field > label, .mo .field > .label { transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.mo .field:focus-within > label, .mo .field:focus-within > .label { transform: translateX(4px); }
+.mo .choice label { transition: all .3s cubic-bezier(.2,.7,.2,1); }
+.mo .choice input:checked + label { animation: mo-pop .45s cubic-bezier(.2,.7,.2,1); }
+@media (hover: hover) { .mo .choice label:hover { transform: translateY(-2px); } }
+
+/* ---------- Gallery ---------- */
+.mo .gallery button { position: relative; }
+.mo .gallery img { transition: transform 1s cubic-bezier(.2,.7,.2,1), filter .7s; }
+.mo .gallery button:hover img, .mo .gallery button:focus-visible img { transform: scale(1.09); }
+.mo .gallery button::after {
+  content: ""; position: absolute; inset: 9px; border: 1px solid var(--mo-frame); pointer-events: none;
+  opacity: 0; transform: scale(1.12); transition: opacity .5s, transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.mo .gallery button:hover::after, .mo .gallery button:focus-visible::after { opacity: 1; transform: none; }
+.mo .lightbox:not([hidden]) { animation: mo-fade .35s ease backwards; }
+.mo .lightbox img { animation: mo-zoom .55s cubic-bezier(.16,.8,.24,1) backwards; }
+
+/* ---------- Footer ---------- */
+.mo footer:not(.in) > * { opacity: 0; }
+.mo footer.in > * { animation: mo-rise 1s cubic-bezier(.16,.8,.24,1) backwards; }
+.mo footer.in > :nth-child(2) { animation-delay: .15s; }
+.mo footer.in > :nth-child(3) { animation-delay: .3s; }
+.mo footer.in > :nth-child(4) { animation-delay: .45s; }
+.mo footer.in > .mp { animation: mo-rise 1s cubic-bezier(.16,.8,.24,1) backwards, mo-float 7s ease-in-out 1.4s infinite; }
+.mo footer .mp { transition: filter .8s; }
+@media (hover: hover) { .mo footer .mp:hover { filter: drop-shadow(0 0 16px var(--mo-glow)); } }
+
+}  /* end no-preference */

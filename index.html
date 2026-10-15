@@ -258,6 +258,8 @@ footer p { margin: 0; font-family: var(--display); font-size: 11px; letter-spaci
 footer .credit { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule); font-size: 10.5px; letter-spacing: .26em; }
 footer .credit b { font-weight: 700; color: var(--ink); }
 </style>
+<link rel="stylesheet" href="motion.css">
+<script>(function(d){var r=d.documentElement;if(window.IntersectionObserver&&!matchMedia("(prefers-reduced-motion: reduce)").matches){r.className+=" mo";setTimeout(function(){if(!window.__mo)r.className=r.className.replace(/\bmo\b/,"")},4000)}})(document)</script>
 
 <nav class="nav" aria-label="Sections">
   <div class="nav-inner">
@@ -671,6 +673,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") openLb(current + 1);
 });
 </script>
+<script src="motion.js" defer></script>
 
 </body>
 </html>
