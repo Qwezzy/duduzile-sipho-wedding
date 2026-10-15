@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Duduzile &amp; Sipho</title>
-<meta name="description" content="Duduzile and Sipho. 19 December 2026, Dindela, Limpopo. RSVP, registry, places to stay, directions and gallery.">
+<meta name="description" content="Duduzile and Sipho. 19 and 20 December 2026, Dindela, Limpopo. RSVP, registry, places to stay, directions and gallery.">
 <meta name="theme-color" content="#F6F2EA">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:title" content="Duduzile &amp; Sipho">
-<meta property="og:description" content="Wedding invitation: 19 December 2026, Dindela, Limpopo.">
+<meta property="og:description" content="Wedding invitation: 19 and 20 December 2026, Dindela, Limpopo.">
 <meta property="og:image" content="save-the-date.jpg">
 <style>html{color-scheme:light}img{max-width:100%}</style>
 </head>
@@ -219,6 +219,9 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { border-color
 .route-list { list-style: none; padding: 0; margin: 30px auto 0; max-width: 520px; display: grid; gap: 18px; }
 .route-list li { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 16px; }
 .route-list p { margin: 0; font-size: 16px; }
+.daydir + .daydir { margin-top: 36px; padding-top: 32px; border-top: 1px solid var(--rule); }
+.daydir .btn-row { margin-top: 22px; }
+.venue .note { margin: 4px 0 0; font-size: 16px; color: var(--ink-soft); }
 @media (max-width: 480px) { .route-list li { grid-template-columns: 1fr; gap: 4px; } }
 
 /* Gallery */
@@ -280,9 +283,9 @@ footer .credit b { font-weight: 700; color: var(--ink); }
   <!-- Hero: the couple's artwork as supplied -->
   <section class="sheet hero" aria-label="Save the date">
     <img src="save-the-date.jpg" width="1254" height="1254"
-         alt="Wedding invitation. Duduzile and Sipho, 19 December 2026, Dindela, Elias Motsoaledi Local Municipality, Limpopo.">
+         alt="Wedding invitation. Duduzile and Sipho, 19 and 20 December 2026, Dindela, Elias Motsoaledi Local Municipality, Limpopo.">
     <div class="hero-foot">
-      <p class="kicker">SATURDAY · 19 DECEMBER 2026</p>
+      <p class="kicker">19 &amp; 20 DECEMBER 2026</p>
       <div class="countdown" id="countdown" aria-live="off">
         <div><b id="cd-d">--</b><span>DAYS</span></div>
         <div><b id="cd-h">--</b><span>HOURS</span></div>
@@ -297,23 +300,10 @@ footer .credit b { font-weight: 700; color: var(--ink); }
 
   <!-- The day -->
   <section class="sheet pr" aria-labelledby="day-h">
-    <p class="kicker">THE CELEBRATION</p>
-    <h2 id="day-h">The Day</h2>
+    <p class="kicker">TWO DAYS OF CELEBRATION</p>
+    <h2 id="day-h">The Weekend</h2>
     <div class="short-rule"></div>
-    <div class="events">
-      <article class="event" id="ev-ceremony">
-        <span class="label">THE CEREMONY</span>
-        <p class="time" data-ev="ceremony.time"></p>
-        <p class="venue-line" data-ev="ceremony.venue"></p>
-        <p class="sub" data-ev="ceremony.note"></p>
-      </article>
-      <article class="event" id="ev-reception">
-        <span class="label">THE RECEPTION</span>
-        <p class="time" data-ev="reception.time"></p>
-        <p class="venue-line" data-ev="reception.venue"></p>
-        <p class="sub" data-ev="reception.note"></p>
-      </article>
-    </div>
+    <div class="events" id="events"></div>
     <div class="dress" id="dress-line" hidden>
       <span class="label">DRESS CODE</span>
       <p data-k="dressCode"></p>
@@ -406,18 +396,7 @@ footer .credit b { font-weight: 700; color: var(--ink); }
     <p class="kicker">FINDING YOUR WAY</p>
     <h2 id="dir-h">Directions</h2>
     <div class="short-rule"></div>
-    <div class="empty" id="dir-empty" hidden><p>The venue in Limpopo will be announced with the formal invitation.</p><p class="note">Directions, maps and parking details will appear here.</p></div>
-    <div class="venue" id="dir-venue">
-      <span class="label">VENUE</span>
-      <p class="name" data-k="venueName"></p>
-      <address data-k="venueAddress"></address>
-    </div>
-    <div class="btn-row" id="dir-btns" style="margin-top:22px">
-      <a class="btn" id="gmaps" href="#" target="_blank" rel="noopener">GOOGLE MAPS</a>
-      <a class="btn ghost" id="waze" href="#" target="_blank" rel="noopener">WAZE</a>
-      <a class="btn ghost" id="venue-site" href="#" target="_blank" rel="noopener" hidden>VENUE WEBSITE</a>
-      <a class="btn ghost" id="gcal" href="#" target="_blank" rel="noopener">ADD TO CALENDAR</a>
-    </div>
+    <div id="dir-days"></div>
     <ul class="route-list" id="routes"></ul>
   </section>
 
@@ -437,7 +416,7 @@ footer .credit b { font-weight: 700; color: var(--ink); }
 
   <footer>
     <img class="mp" src="logo.png" width="322" height="231" alt="Duduzile and Sipho monogram">
-    <p>DUDUZILE &amp; SIPHO · 19.12.2026 · LIMPOPO</p>
+    <p>DUDUZILE &amp; SIPHO · 19–20.12.2026 · LIMPOPO</p>
     <p class="credit">CREATED BY <b>OB MEDIA SOLUTIONS</b></p>
   </footer>
 </main>
@@ -458,20 +437,25 @@ const SITE = {
   // SAMPLE DETAILS for preview. Replace with the couple's real details, or set a field to ""
   // and that section shows "to follow with the formal invitation". Set preview:false to hide the banner.
   preview: true,
-  date: { y: 2026, m: 12, d: 19, hour: 0, minute: 0 },   // start of the day, SAST (no ceremony time on the card yet)
-  ceremony: { time: "", venue: "", note: "" },
-  reception: { time: "", venue: "", note: "" },
+  date: { y: 2026, m: 12, d: 19, hour: 0, minute: 0 },   // countdown target: start of the first day, SAST
+  area: "Dindela, Elias Motsoaledi Local Municipality, Limpopo",
+  // Two-day wedding. A day with place: null shows "Venue to follow". Once the venue is confirmed, fill in
+  // place { name, address, map (Google Maps link), lat, lng } and the map buttons appear automatically.
+  // Set time: "15:00" on a day once programme times are known.
+  days: [
+    { weekday: "Saturday", y: 2026, m: 12, d: 19, time: "", venue: "", note: "", place: null },
+    { weekday: "Sunday", y: 2026, m: 12, d: 20, time: "", venue: "The Groom's Home", note: "Dindela, Limpopo",
+      place: { name: "The Groom's Home", address: "Dindela, Elias Motsoaledi Local Municipality, Limpopo",
+               map: "https://maps.app.goo.gl/Jf2iNpgoJTYxXqhPA", lat: -25.0625131, lng: 29.722161 } }
+  ],
   dressCode: "Chocolate brown, champagne & white",       // confirmed by the couple
 
   rsvpBy: "30 November 2026",                            // sample
   rsvpWhatsApp: "27820000000",                           // sample number
   maxGuests: 2,
 
-  venueName: "Dindela",
-  venueAddress: "Elias Motsoaledi Local Municipality, Limpopo",
-  venueSite: "",
   routes: [
-    { from: "Directions", text: "Route details will be added once the venue and programme are confirmed. Use the map buttons above for the live route." },
+    { from: "Directions", text: "Use the map buttons above for the live route to each venue." },
     { from: "Parking", text: "Parking details to follow." },
     { from: "Arrival", text: "Please arrive early. The programme times will be shared with the formal invitation." }
   ],
@@ -497,17 +481,21 @@ const waLink = (text) => "https://wa.me/" + SITE.rsvpWhatsApp + "?text=" + encod
 
 $("preview-note").hidden = !SITE.preview;
 /* Simple text slots */
-const times = [SITE.ceremony.time && "Ceremony " + SITE.ceremony.time, SITE.reception.time && "Reception " + SITE.reception.time, SITE.dressCode].filter(Boolean);
-document.querySelectorAll("[data-ev]").forEach(n => {
-  const [k, f] = n.dataset.ev.split(".");
-  const v = SITE[k][f];
-  if (v) n.textContent = v;
-  else if (f === "time") n.textContent = "To follow";
-  else n.hidden = true;
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const dateText = (x) => x.d + " " + MONTHS[x.m - 1];
+/* The Weekend: one card per day */
+SITE.days.forEach(x => {
+  const art = el("article", "event");
+  art.append(el("span", "label", x.weekday.toUpperCase()));
+  art.append(el("p", "time", x.time || dateText(x)));
+  art.append(el("p", "venue-line", x.venue || "Venue to follow"));
+  if (x.note) art.append(el("p", "sub", x.note));
+  if (!x.time) art.append(el("p", "sub", "Times to follow"));
+  $("events").append(art);
 });
 $("dress-line").hidden = !SITE.dressCode;
 const derived = {
-  rsvpByLine: SITE.rsvpBy ? "PLEASE REPLY BY " + SITE.rsvpBy.toUpperCase() : "SATURDAY · 19 DECEMBER 2026",
+  rsvpByLine: SITE.rsvpBy ? "PLEASE REPLY BY " + SITE.rsvpBy.toUpperCase() : "19 & 20 DECEMBER 2026",
   rsvpNumberDisplay: "+" + SITE.rsvpWhatsApp
 };
 document.querySelectorAll("[data-k]").forEach(n => { n.textContent = derived[n.dataset.k] ?? SITE[n.dataset.k] ?? ""; });
@@ -542,32 +530,50 @@ SITE.stays.forEach(s => {
   const c = el("article", "card");
   c.append(el("span", "meta", s.meta), el("h3", null, s.name), el("p", null, s.text));
   const a = el("a", "btn ghost", s.link ? "VIEW & BOOK" : "FIND ON MAPS");
-  a.href = s.link || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.name + " " + SITE.venueAddress);
+  a.href = s.link || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.name + " " + SITE.area);
   a.target = "_blank"; a.rel = "noopener";
   c.append(a);
   $("stay-cards").append(c);
 });
 
-/* Directions */
-const hasVenue = !!SITE.venueName;
-$("dir-empty").hidden = hasVenue; $("dir-venue").hidden = !hasVenue; $("dir-btns").hidden = !hasVenue; $("routes").hidden = !hasVenue;
-const place = [SITE.venueName, SITE.venueAddress].filter(Boolean).join(", ");
-$("gmaps").href = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(place);
-if (SITE.venueSite) { $("venue-site").href = SITE.venueSite; $("venue-site").hidden = false; }
-$("waze").href = "https://waze.com/ul?navigate=yes&q=" + encodeURIComponent(place);
+/* Directions: one block per day; map buttons appear once a day has a place */
+const pad = (n) => String(n).padStart(2, "0");
+const ymd = (t) => { const d = new Date(t); return d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()); };
+const stamp = (t) => ymd(t) + "T" + pad(new Date(t).getUTCHours()) + pad(new Date(t).getUTCMinutes()) + "00Z";
+const calLink = (text, x0, x1, details, location) => {
+  const day0 = Date.UTC(x0.y, x0.m - 1, x0.d), day1 = Date.UTC(x1.y, x1.m - 1, x1.d);
+  const t = /^(\d{1,2}):(\d{2})/.exec(x0.time || "");      // a set time gives a timed event (SAST), otherwise all-day
+  const start = t ? day0 + (+t[1] - 2) * 36e5 + (+t[2]) * 6e4 : 0;
+  const dates = t && x0 === x1 ? stamp(start) + "/" + stamp(start + 6 * 36e5) : ymd(day0) + "/" + ymd(day1 + 864e5);
+  return "https://calendar.google.com/calendar/render?" + new URLSearchParams({ action: "TEMPLATE", text, dates, details, location: location || SITE.area });
+};
+const placeText = (p) => [p.name, p.address].filter(Boolean).join(", ");
+const googleLink = (p) => p.map || "https://www.google.com/maps/dir/?api=1&destination=" + (p.lat != null ? p.lat + "," + p.lng : encodeURIComponent(placeText(p)));
+const wazeLink = (p) => p.lat != null ? "https://waze.com/ul?ll=" + p.lat + "," + p.lng + "&navigate=yes" : "https://waze.com/ul?navigate=yes&q=" + encodeURIComponent(placeText(p));
+const link = (cls, text, href) => { const a = el("a", cls, text); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; };
+SITE.days.forEach(x => {
+  const wrap = el("div", "daydir"), v = el("div", "venue");
+  v.append(el("span", "label", (x.weekday + " · " + dateText(x)).toUpperCase()), el("p", "name", x.place ? x.place.name : "Venue to follow"));
+  if (x.place && x.place.address) v.append(el("address", null, x.place.address));
+  if (!x.place) v.append(el("p", "note", "The venue and route will be shared here once confirmed."));
+  wrap.append(v);
+  if (x.place) {
+    const row = el("div", "btn-row");
+    row.append(link("btn", "GOOGLE MAPS", googleLink(x.place)), link("btn ghost", "WAZE", wazeLink(x.place)),
+      link("btn ghost", "ADD TO CALENDAR", calLink("Duduzile & Sipho's Wedding (" + x.weekday + ")", x, x,
+        [x.venue || x.place.name, x.time ? "Starts " + x.time : "Programme times to follow.", googleLink(x.place)].join("\n"), placeText(x.place))));
+    wrap.append(row);
+  }
+  $("dir-days").append(wrap);
+});
+$("routes").hidden = !SITE.days.some(x => x.place);
+/* Hero: save both days as one calendar entry */
 {
-  const pad = (n) => String(n).padStart(2, "0");
-  const timed = !!SITE.ceremony.time;
-  const fmt = (d) => d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z";
-  const day = (y, m, d) => y + pad(m) + pad(d);
-  const dates = timed
-    ? fmt(new Date(target)) + "/" + fmt(new Date(target + 12 * 36e5))
-    : day(SITE.date.y, SITE.date.m, SITE.date.d) + "/" + day(SITE.date.y, SITE.date.m, SITE.date.d + 1);
-  const details = ["Wedding of Duduzile & Sipho. Programme times to follow.", times.join(" · ")].filter(Boolean).join("\n");
-  const cal = "https://calendar.google.com/calendar/render?" + new URLSearchParams({
-    action: "TEMPLATE", text: "Duduzile & Sipho's Wedding", dates, details, location: place || "Limpopo"
-  });
-  $("gcal").href = cal; $("hero-cal").href = cal;
+  const first = SITE.days[0], last = SITE.days[SITE.days.length - 1], known = SITE.days.find(x => x.place);
+  const details = ["Wedding of Duduzile & Sipho.",
+    ...SITE.days.map(x => x.weekday + " " + dateText(x) + ": " + (x.venue || "venue to follow") + (x.place ? " " + googleLink(x.place) : "")),
+    "Dress code: " + SITE.dressCode].join("\n");
+  $("hero-cal").href = calLink("Duduzile & Sipho's Wedding", { ...first, time: "" }, { ...last, time: "" }, details, known ? placeText(known.place) : SITE.area);
 }
 SITE.routes.forEach(r => {
   const li = el("li"); li.append(el("span", "label", r.from.toUpperCase()), el("p", null, r.text));
@@ -613,7 +619,7 @@ form.addEventListener("submit", (ev) => {
   err.hidden = true;
   const yes = f.attending === "yes";
   const text = [
-    "RSVP · Duduzile & Sipho · 19 December 2026",
+    "RSVP · Duduzile & Sipho · 19 & 20 December 2026",
     "Name: " + name,
     f.phone && f.phone.trim() ? "Cell: " + f.phone.trim() : null,
     "Attending: " + (yes ? "Yes" : "No"),
