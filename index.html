@@ -443,7 +443,8 @@ const SITE = {
   // place { name, address, map (Google Maps link), lat, lng } and the map buttons appear automatically.
   // Set time: "15:00" on a day once programme times are known.
   days: [
-    { weekday: "Saturday", y: 2026, m: 12, d: 19, time: "", venue: "", note: "", place: null },
+    { weekday: "Saturday", y: 2026, m: 12, d: 19, time: "", venue: "The Bride's Home", note: "",
+      place: { name: "The Bride's Home", address: "", map: "https://maps.app.goo.gl/ykWH3JcMjnoNN9PZ8", lat: null, lng: null } },
     { weekday: "Sunday", y: 2026, m: 12, d: 20, time: "", venue: "The Groom's Home", note: "Dindela, Limpopo",
       place: { name: "The Groom's Home", address: "Dindela, Elias Motsoaledi Local Municipality, Limpopo",
                map: "https://maps.app.goo.gl/Jf2iNpgoJTYxXqhPA", lat: -25.0625131, lng: 29.722161 } }
@@ -559,7 +560,9 @@ SITE.days.forEach(x => {
   wrap.append(v);
   if (x.place) {
     const row = el("div", "btn-row");
-    row.append(link("btn", "GOOGLE MAPS", googleLink(x.place)), link("btn ghost", "WAZE", wazeLink(x.place)),
+    row.append(link("btn", "GOOGLE MAPS", googleLink(x.place)));
+    if (x.place.lat != null) row.append(link("btn ghost", "WAZE", wazeLink(x.place)));   // Waze needs coordinates
+    row.append(
       link("btn ghost", "ADD TO CALENDAR", calLink("Duduzile & Sipho's Wedding (" + x.weekday + ")", x, x,
         [x.venue || x.place.name, x.time ? "Starts " + x.time : "Programme times to follow.", googleLink(x.place)].join("\n"), placeText(x.place))));
     wrap.append(row);
@@ -569,11 +572,11 @@ SITE.days.forEach(x => {
 $("routes").hidden = !SITE.days.some(x => x.place);
 /* Hero: save both days as one calendar entry */
 {
-  const first = SITE.days[0], last = SITE.days[SITE.days.length - 1], known = SITE.days.find(x => x.place);
+  const first = SITE.days[0], last = SITE.days[SITE.days.length - 1];
   const details = ["Wedding of Duduzile & Sipho.",
     ...SITE.days.map(x => x.weekday + " " + dateText(x) + ": " + (x.venue || "venue to follow") + (x.place ? " " + googleLink(x.place) : "")),
     "Dress code: " + SITE.dressCode].join("\n");
-  $("hero-cal").href = calLink("Duduzile & Sipho's Wedding", { ...first, time: "" }, { ...last, time: "" }, details, known ? placeText(known.place) : SITE.area);
+  $("hero-cal").href = calLink("Duduzile & Sipho's Wedding", { ...first, time: "" }, { ...last, time: "" }, details, SITE.area);
 }
 SITE.routes.forEach(r => {
   const li = el("li"); li.append(el("span", "label", r.from.toUpperCase()), el("p", null, r.text));
