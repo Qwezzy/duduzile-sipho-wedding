@@ -662,6 +662,7 @@ fetch("gallery.json").then(r => r.ok ? r.json() : []).then(list => {
   photos.forEach((p, i) => {
     const b = el("button"); b.type = "button"; b.setAttribute("aria-label", "Open photo " + (i + 1));
     const img = el("img"); img.src = p.src; img.alt = p.alt || ""; img.loading = "eager";
+    if (p.pos) img.style.objectPosition = p.pos;
     b.append(img); b.addEventListener("click", () => openLb(i));
     $("gallery-grid").append(b);
   });

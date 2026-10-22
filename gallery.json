@@ -1,47 +1,81 @@
 [
  {
-  "src": "photos/wedding-1.jpg",
-  "alt": "Bride and groom sharing a close, smiling moment",
-  "credit": "Pexels"
+  "src": "photos/photo-01.jpg",
+  "alt": "Duduzile and Sipho together at home"
  },
  {
-  "src": "photos/wedding-2.jpg",
-  "alt": "Groom in a white tuxedo holding his bride close",
-  "credit": "Pexels"
+  "src": "photos/photo-02.jpg",
+  "alt": "Duduzile in a white shawl reading NaMkoneni Ka Mahlangu"
  },
  {
-  "src": "photos/wedding-3.jpg",
-  "alt": "Groom kissing his bride's hand",
-  "credit": "Pexels"
+  "src": "photos/photo-03.jpg",
+  "alt": "Sipho in a navy shirt and sunglasses",
+  "pos": "center 20%"
  },
  {
-  "src": "photos/wedding-4.jpg",
-  "alt": "Couple exchanging glances after the ceremony",
-  "credit": "Pexels"
+  "src": "photos/photo-04.jpg",
+  "alt": "Duduzile in a white shawl and traditional skirt"
  },
  {
-  "src": "photos/wedding-5.jpg",
-  "alt": "Couple embracing in a studio portrait",
-  "credit": "Pexels"
+  "src": "photos/photo-05.jpg",
+  "alt": "Sipho smiling, seated on a stool"
  },
  {
-  "src": "photos/wedding-6.jpg",
-  "alt": "Couple embracing on the stairs outdoors",
-  "credit": "Pexels"
+  "src": "photos/photo-06.jpg",
+  "alt": "Duduzile in a white and black traditional dress",
+  "pos": "center 15%"
  },
  {
-  "src": "photos/wedding-7.jpg",
-  "alt": "Groom placing the ring during the ceremony",
-  "credit": "Pexels"
+  "src": "photos/photo-07.jpg",
+  "alt": "Sipho in a blue shirt, hand on chin"
  },
  {
-  "src": "photos/wedding-8.jpg",
-  "alt": "Wedding rings on a couple's hands",
-  "credit": "Pexels"
+  "src": "photos/photo-08.jpg",
+  "alt": "Duduzile in a studio portrait",
+  "pos": "center 20%"
  },
  {
-  "src": "photos/wedding-9.jpg",
-  "alt": "Couple holding hands, black and white",
-  "credit": "Pexels"
+  "src": "photos/photo-09.jpg",
+  "alt": "Sipho laughing at his phone"
+ },
+ {
+  "src": "photos/photo-10.jpg",
+  "alt": "Duduzile in a blue blanket and traditional skirt"
+ },
+ {
+  "src": "photos/photo-11.jpg",
+  "alt": "Sipho smiling, arms crossed",
+  "pos": "center 30%"
+ },
+ {
+  "src": "photos/photo-12.jpg",
+  "alt": "Duduzile and a little girl in matching beige"
+ },
+ {
+  "src": "photos/photo-13.jpg",
+  "alt": "Sipho, hand on chin, against the sky"
+ },
+ {
+  "src": "photos/photo-14.jpg",
+  "alt": "Duduzile in a black tulle skirt and pink heels",
+  "pos": "center 15%"
+ },
+ {
+  "src": "photos/photo-15.jpg",
+  "alt": "Duduzile in a black dress in the garden"
+ },
+ {
+  "src": "photos/photo-16.jpg",
+  "alt": "Duduzile and a little girl in matching burgundy"
+ },
+ {
+  "src": "photos/photo-17.jpg",
+  "alt": "Duduzile in white, the hills behind her",
+  "pos": "35% center"
+ },
+ {
+  "src": "photos/photo-18.jpg",
+  "alt": "Duduzile in white with a pink handbag",
+  "pos": "30% center"
  }
 ]
