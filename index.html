@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Duduzile &amp; Sipho</title>
 <meta name="description" content="Duduzile and Sipho. 19 and 20 December 2026, Dindela, Limpopo. RSVP, registry, places to stay, directions and gallery.">
-<meta name="theme-color" content="#F6F2EA">
+<meta name="theme-color" content="#FCFAF6">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:title" content="Duduzile &amp; Sipho">
 <meta property="og:description" content="Wedding invitation: 19 and 20 December 2026, Dindela, Limpopo.">
@@ -23,16 +23,16 @@
    Deliberately one light look (paper stock), so no dark-theme blocks. */
 [hidden] { display: none !important; }
 :root {
-  --ground: #E8E2D6;       /* table the stationery sits on */
-  --paper: #F6F2EA;        /* ivory envelope stock */
-  --paper-2: #EEE8DC;
-  --ink: #1B1815;          /* black lettering, as on the invitation */
-  --ink-soft: #5A4D3C;
-  --gold: #A5741C;         /* the invitation's gold: rules, date */
-  --gold-deep: #8A5E12;    /* gold for small text (AA on ivory) */
-  --seal: #946614;         /* wax-seal gold, buttons */
-  --seal-deep: #7A530F;
-  --rule: rgba(165, 116, 28, .5);
+  --ground: #E9DECB;       /* table the stationery sits on */
+  --paper: #FCFAF6;        /* ivory envelope stock */
+  --paper-2: #F2EADD;
+  --ink: #3A2317;          /* black lettering, as on the invitation */
+  --ink-soft: #6A4D3B;
+  --gold: #A8845A;         /* the invitation's gold: rules, date */
+  --gold-deep: #7A5838;    /* gold for small text (AA on ivory) */
+  --seal: #4A2C1D;         /* wax-seal gold, buttons */
+  --seal-deep: #3A2317;
+  --rule: rgba(168, 132, 90, .5);
   --field: rgba(255, 255, 255, .62);
   --display: "Playfair Display SC", "Playfair Display", "Didot", "Bodoni MT", Georgia, serif;
   --serif: "Playfair Display", "Didot", "Bodoni MT", Georgia, serif;
@@ -54,7 +54,7 @@ a { color: inherit; }
 /* ---------- Navigation ---------- */
 .nav {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
-  background: rgba(246, 242, 234, .93);
+  background: rgba(252, 250, 246, .93);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--rule);
 }
@@ -92,7 +92,7 @@ a { color: inherit; }
 /* Stationery sheet with the double hairline frame from the artwork */
 .sheet {
   position: relative; background: var(--paper);
-  box-shadow: 0 24px 50px -30px rgba(60, 44, 18, .3), 0 1px 3px rgba(60, 44, 18, .08);
+  box-shadow: 0 24px 50px -30px rgba(58, 35, 23, .3), 0 1px 3px rgba(58, 35, 23, .08);
   padding: clamp(48px, 9vw, 72px) clamp(28px, 8vw, 72px);
   min-width: 0;
 }
@@ -156,7 +156,7 @@ h2 {
 }
 .btn:hover { background: var(--seal-deep); border-color: var(--seal-deep); }
 .btn.ghost { background: transparent; color: var(--ink); border-color: var(--gold); }
-.btn.ghost:hover { background: rgba(165, 116, 28, .08); }
+.btn.ghost:hover { background: rgba(168, 132, 90, .08); }
 .btn:focus-visible, .textlink:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .btn.block { width: 100%; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
@@ -167,17 +167,17 @@ h2 {
 .field > label, .field > .label { padding-left: 2px; }
 input[type=text], input[type=tel], select, textarea {
   width: 100%; font: inherit; font-size: 17px; color: var(--ink);
-  background: var(--field); border: 1px solid rgba(165, 116, 28, .45); border-radius: 2px;
+  background: var(--field); border: 1px solid rgba(168, 132, 90, .45); border-radius: 2px;
   padding: 11px 14px; outline: none; transition: border-color .15s, background .15s;
 }
 textarea { min-height: 86px; resize: vertical; }
-input::placeholder, textarea::placeholder { color: rgba(90, 77, 60, .55); font-style: italic; }
+input::placeholder, textarea::placeholder { color: rgba(106, 77, 59, .55); font-style: italic; }
 input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--ink); background: #fff; }
 .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .choice input { position: absolute; opacity: 0; pointer-events: none; }
 .choice label {
   display: grid; place-items: center; text-align: center; cursor: pointer; min-height: 56px; padding: 10px 8px;
-  border: 1px solid rgba(165, 116, 28, .45); background: var(--field); font-size: 17px; line-height: 1.2; transition: all .15s;
+  border: 1px solid rgba(168, 132, 90, .45); background: var(--field); font-size: 17px; line-height: 1.2; transition: all .15s;
 }
 .choice input:checked + label { background: var(--seal); color: #FBF7F0; border-color: var(--seal); }
 .choice input:focus-visible + label { outline: 2px solid var(--ink); outline-offset: 2px; }
@@ -239,7 +239,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { border-color
 .empty .frames i:nth-child(2) { height: 84px; margin-top: -7px; }
 .empty p { margin: 0; }
 .lightbox {
-  position: fixed; inset: 0; z-index: 50; background: rgba(27, 24, 21, .9);
+  position: fixed; inset: 0; z-index: 50; background: rgba(40, 24, 16, .9);
   display: grid; place-items: center;
   padding: calc(48px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(48px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
 }

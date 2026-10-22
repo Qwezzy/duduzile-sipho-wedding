@@ -7,23 +7,23 @@
 @property --lo { syntax: "<number>"; inherits: true; initial-value: 0; }
 
 :root {
-  --mo-glint: rgba(200,150,50,1);
+  --mo-glint: rgba(200,170,124,1);
   --mo-text-base: linear-gradient(var(--ink), var(--ink));
-  --mo-light: 214,168,74;  --mo-light-a: .1;
-  --mo-spot: rgba(214,168,74,.16);
-  --mo-hov: rgba(165,116,28,.85);
-  --mo-card-shadow: rgba(110,76,14,.45);
+  --mo-light: 216,192,152;  --mo-light-a: .1;
+  --mo-spot: rgba(216,192,152,.16);
+  --mo-hov: rgba(168,132,90,.85);
+  --mo-card-shadow: rgba(74,44,29,.45);
   --mo-card-inset: 0 0 0 0 transparent;
-  --mo-progress: linear-gradient(90deg,#8A5E12,#D9A93E 55%,#A5741C);
-  --mo-amb1: rgba(214,168,74,.12);  --mo-amb2: rgba(165,116,28,.08);
-  --mo-sheen: rgba(255,244,214,.55);  --mo-sheen-blend: overlay;  --mo-sweep: rgba(255,246,222,.5);
-  --mo-shine: rgba(255,244,214,.5);   --mo-shine-ghost: rgba(214,168,74,.3);
-  --mo-btn-hover-shadow: 0 16px 28px -12px rgba(110,76,14,.6);
-  --mo-focus: rgba(165,116,28,.22);
+  --mo-progress: linear-gradient(90deg,#6E4B30,#D8C3A0 55%,#A8845A);
+  --mo-amb1: rgba(216,192,152,.12);  --mo-amb2: rgba(168,132,90,.08);
+  --mo-sheen: rgba(250,242,228,.55);  --mo-sheen-blend: overlay;  --mo-sweep: rgba(250,244,232,.5);
+  --mo-shine: rgba(250,242,228,.5);   --mo-shine-ghost: rgba(216,192,152,.3);
+  --mo-btn-hover-shadow: 0 16px 28px -12px rgba(74,44,29,.6);
+  --mo-focus: rgba(168,132,90,.22);
   --mo-frame: rgba(255,255,255,.85);
-  --mo-glow: rgba(214,168,74,.55);
-  --mo-nav-shadow: rgba(60,44,18,.5);
-  --mo-rip: rgba(255,255,255,.35);  --mo-rip-ghost: rgba(165,116,28,.22);
+  --mo-glow: rgba(216,192,152,.55);
+  --mo-nav-shadow: rgba(58,35,23,.5);
+  --mo-rip: rgba(255,255,255,.35);  --mo-rip-ghost: rgba(168,132,90,.22);
 }
 
 @media screen and (prefers-reduced-motion: no-preference) {
