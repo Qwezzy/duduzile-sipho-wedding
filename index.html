@@ -449,10 +449,10 @@ const SITE = {
   // place { name, address, map (Google Maps link), lat, lng } and the map buttons appear automatically.
   // Set time: "15:00" on a day once programme times are known.
   days: [
-    { weekday: "Saturday", y: 2026, m: 12, d: 19, time: "", venue: "The Bride's Home", note: "Dindela, Limpopo",
+    { weekday: "Saturday", y: 2026, m: 12, d: 19, time: "10:00", venue: "The Bride's Home", note: "Dindela, Limpopo",
       place: { name: "The Bride's Home", address: "Dindela, Elias Motsoaledi Local Municipality, Limpopo",
                map: "https://www.google.com/maps?q=-25.054162979125977,29.719585418701172&z=17&hl=en", lat: -25.054163, lng: 29.719585 } },
-    { weekday: "Sunday", y: 2026, m: 12, d: 20, time: "", venue: "The Groom's Home", note: "Dindela, Limpopo",
+    { weekday: "Sunday", y: 2026, m: 12, d: 20, time: "12:00", venue: "The Groom's Home", note: "Dindela, Limpopo",
       place: { name: "The Groom's Home", address: "Dindela, Elias Motsoaledi Local Municipality, Limpopo",
                map: "https://www.google.com/maps?q=-25.062538146972656,29.722211837768555&z=17&hl=en", lat: -25.062538, lng: 29.722212 } }
   ],
@@ -467,7 +467,7 @@ const SITE = {
   routes: [
     { from: "Directions", text: "Use the map buttons above for the live route to each venue." },
     { from: "Parking", text: "Parking details to follow." },
-    { from: "Arrival", text: "Please arrive early. The programme times will be shared with the formal invitation." }
+    { from: "Arrival", text: "Saturday starts at 10:00 and Sunday at 12:00. Please arrive a little early." }
   ],
 
   registryNote: "Your presence is the greatest gift to us. If you would like to contribute further, we would be thankful for a monetary gift or a voucher from the stores below.",
@@ -503,7 +503,8 @@ const dateText = (x) => x.d + " " + MONTHS[x.m - 1];
 SITE.days.forEach(x => {
   const art = el("article", "event");
   art.append(el("span", "label", x.weekday.toUpperCase()));
-  art.append(el("p", "time", x.time || dateText(x)));
+  art.append(el("p", "time", dateText(x)));
+  if (x.time) art.append(el("p", "venue-line", "From " + x.time));
   art.append(el("p", "venue-line", x.venue || "Venue to follow"));
   if (x.note) art.append(el("p", "sub", x.note));
   if (!x.time) art.append(el("p", "sub", "Times to follow"));

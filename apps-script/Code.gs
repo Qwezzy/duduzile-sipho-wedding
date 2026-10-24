@@ -19,10 +19,9 @@ const EVENT = {
   couple: "Duduzile & Sipho",
   header: "19 & 20 DECEMBER 2026 · LIMPOPO",
   days: [
-    ["Saturday 19 December", "The Bride's Home, Dindela, Limpopo"],
-    ["Sunday 20 December", "The Groom's Home, Dindela, Limpopo"]
+    ["Saturday 19 December, 10:00", "The Bride's Home, Dindela, Limpopo"],
+    ["Sunday 20 December, 12:00", "The Groom's Home, Dindela, Limpopo"]
   ],
-  times: "Programme times to follow",
   dress: "Formal or traditional wear (colours: chocolate brown, champagne & white)",
   site: "https://duduzile-sipho-wedding.vercel.app/#directions"
 };
@@ -172,7 +171,7 @@ function save(g) {
 /* ---------- emails ---------- */
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-const DAY_DETAILS = () => EVENT.days.concat([["Times", EVENT.times], ["Dress code", EVENT.dress], ["Directions", EVENT.site]]);
+const DAY_DETAILS = () => EVENT.days.concat([["Dress code", EVENT.dress], ["Directions", EVENT.site]]);
 const CONTACT_LINE = RSVP_CONTACT ? " You can also contact " + RSVP_CONTACT + " (RSVP)." : "";
 
 /* One shared layout for every guest email: intro, a "your reply" table, optional day details, closing line. */
