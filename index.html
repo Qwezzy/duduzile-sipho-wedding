@@ -307,6 +307,7 @@ footer .credit b { font-weight: 700; color: var(--ink); }
     <div class="dress" id="dress-line" hidden>
       <span class="label">DRESS CODE</span>
       <p data-k="dressCode"></p>
+      <p class="sub" id="colours-line" hidden style="font-size:.82em;font-style:italic;margin-top:6px;color:var(--ink-soft)"></p>
     </div>
   </section>
 
@@ -450,9 +451,10 @@ const SITE = {
       place: { name: "The Groom's Home", address: "Dindela, Elias Motsoaledi Local Municipality, Limpopo",
                map: "https://www.google.com/maps?q=-25.062538146972656,29.722211837768555&z=17&hl=en", lat: -25.062538, lng: 29.722212 } }
   ],
-  dressCode: "Chocolate brown, champagne & white",       // confirmed by the couple
+  dressCode: "Formal or traditional wear",              // confirmed by the couple
+  colours: "Chocolate brown, champagne & white",         // wedding colour scheme, confirmed
 
-  rsvpBy: "30 November 2026",                            // sample
+  rsvpBy: "30 November 2026",                            // confirmed by the couple
   rsvpWhatsApp: "27820000000",                           // sample number
   maxGuests: 2,
 
@@ -496,6 +498,7 @@ SITE.days.forEach(x => {
   $("events").append(art);
 });
 $("dress-line").hidden = !SITE.dressCode;
+if (SITE.colours) { $("colours-line").textContent = "Wedding colours: " + SITE.colours; $("colours-line").hidden = false; }
 const derived = {
   rsvpByLine: SITE.rsvpBy ? "PLEASE REPLY BY " + SITE.rsvpBy.toUpperCase() : "19 & 20 DECEMBER 2026",
   rsvpNumberDisplay: "+" + SITE.rsvpWhatsApp
@@ -576,7 +579,7 @@ $("routes").hidden = !SITE.days.some(x => x.place);
   const first = SITE.days[0], last = SITE.days[SITE.days.length - 1];
   const details = ["Wedding of Duduzile & Sipho.",
     ...SITE.days.map(x => x.weekday + " " + dateText(x) + ": " + (x.venue || "venue to follow") + (x.place ? " " + googleLink(x.place) : "")),
-    "Dress code: " + SITE.dressCode].join("\n");
+    "Dress code: " + SITE.dressCode + (SITE.colours ? " (colours: " + SITE.colours + ")" : "")].join("\n");
   $("hero-cal").href = calLink("Duduzile & Sipho's Wedding", { ...first, time: "" }, { ...last, time: "" }, details, SITE.area);
 }
 SITE.routes.forEach(r => {
