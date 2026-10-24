@@ -1,0 +1,6 @@
+{
+  "name": "duduzile-sipho-wedding",
+  "private": true,
+  "description": "Wedding site for Duduzile and Sipho. Static pages plus one serverless function (api/rsvp.js) that passes RSVPs to a Google Sheet.",
+  "engines": { "node": ">=20" }
+}

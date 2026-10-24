@@ -165,7 +165,7 @@ h2 {
 .form { display: grid; gap: 18px; max-width: 460px; margin: 0 auto; }
 .field { display: grid; gap: 6px; min-width: 0; }
 .field > label, .field > .label { padding-left: 2px; }
-input[type=text], input[type=tel], select, textarea {
+input[type=text], input[type=email], input[type=tel], select, textarea {
   width: 100%; font: inherit; font-size: 17px; color: var(--ink);
   background: var(--field); border: 1px solid rgba(168, 132, 90, .45); border-radius: 2px;
   padding: 11px 14px; outline: none; transition: border-color .15s, background .15s;
@@ -225,6 +225,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { border-color
 @media (max-width: 480px) { .route-list li { grid-template-columns: 1fr; gap: 4px; } }
 
 /* Gallery */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 @media (max-width: 440px) { .gallery { gap: 6px; } }
 .gallery button { padding: 0; border: 0; background: var(--paper-2); cursor: zoom-in; aspect-ratio: 1; overflow: hidden; }
@@ -327,6 +328,10 @@ footer .credit b { font-weight: 700; color: var(--ink); }
         <input id="f-name" name="name" type="text" autocomplete="name" placeholder="e.g. Lerato Mokoena" required>
       </div>
       <div class="field">
+        <label class="label" for="f-email">EMAIL ADDRESS <span aria-hidden="true">*</span></label>
+        <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="We will send your confirmation here" required>
+      </div>
+      <div class="field">
         <label class="label" for="f-phone">CELL NUMBER</label>
         <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="e.g. 082 123 4567">
       </div>
@@ -356,18 +361,18 @@ footer .credit b { font-weight: 700; color: var(--ink); }
         <label class="label" for="f-note">A NOTE FOR THE COUPLE</label>
         <textarea id="f-note" name="note" placeholder="Optional"></textarea>
       </div>
-      <p class="err" id="err" hidden></p>
-      <button class="btn block" type="submit">SEND RSVP</button>
-      <p class="note" style="margin:0;text-align:center">* Required. Sending opens WhatsApp with your reply ready to go.</p>
+      <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <p class="err" id="err" role="alert" hidden></p>
+      <p class="note" id="err-fallback" style="margin:0;text-align:center" hidden>Or <a id="err-mail" href="#">send your reply from your own email app</a>.</p>
+      <button class="btn block" type="submit" id="send-btn">SEND RSVP</button>
+      <p class="note" style="margin:0;text-align:center">* Required. We use these details only to manage the guest list and to email your confirmation.</p>
     </form>
 
     <div class="done" id="done" hidden aria-live="polite">
       <p class="kicker" id="done-title">THANK YOU</p>
       <p id="done-msg"></p>
-      <a class="btn block" id="wa-link" href="#" target="_blank" rel="noopener">SEND ON WHATSAPP</a>
-      <p class="note">Your reply reaches the couple once you press send in WhatsApp. No WhatsApp? Copy the reply and SMS it to <span data-k="rsvpNumberDisplay" style="user-select:all"></span>.</p>
+      <p class="note" id="done-conf"></p>
       <div class="summary" id="summary"></div>
-      <button class="btn ghost block" type="button" id="copy-btn">COPY REPLY</button>
       <button class="textlink" type="button" id="edit-btn">Change my reply</button>
     </div>
   </section>
@@ -455,7 +460,8 @@ const SITE = {
   colours: "Chocolate brown, champagne & white",         // wedding colour scheme, confirmed
 
   rsvpBy: "30 November 2026",                            // confirmed by the couple
-  rsvpWhatsApp: "27820000000",                           // sample number
+  rsvpOnline: true,                                      // replies go to /api/rsvp, then the couple's Google Sheet (see README)
+  rsvpEmail: "",                                         // [CONFIRM] couple's email, used only in the "send from your own email app" fallback
   maxGuests: 2,
 
   routes: [
@@ -486,7 +492,8 @@ const SITE = {
 
 const $ = (id) => document.getElementById(id);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-const waLink = (text) => "https://wa.me/" + SITE.rsvpWhatsApp + "?text=" + encodeURIComponent(text);
+const waLink = (text) => "https://wa.me/?text=" + encodeURIComponent(text);
+const mailLink = (subject, text) => "mailto:" + SITE.rsvpEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text.replace(/\n/g, "\r\n"));
 
 $("preview-note").hidden = !SITE.preview;
 /* Simple text slots */
@@ -506,7 +513,7 @@ $("dress-line").hidden = !SITE.dressCode;
 if (SITE.colours) { $("colours-line").textContent = "Wedding colours: " + SITE.colours; $("colours-line").hidden = false; }
 const derived = {
   rsvpByLine: SITE.rsvpBy ? "PLEASE REPLY BY " + SITE.rsvpBy.toUpperCase() : "19 & 20 DECEMBER 2026",
-  rsvpNumberDisplay: "+" + SITE.rsvpWhatsApp
+  rsvpEmail: SITE.rsvpEmail
 };
 document.querySelectorAll("[data-k]").forEach(n => { n.textContent = derived[n.dataset.k] ?? SITE[n.dataset.k] ?? ""; });
 
@@ -521,7 +528,7 @@ function tick() {
 tick(); setInterval(tick, 30000);
 
 /* Registry cards */
-const registry = SITE.registry.filter(r => !r.whatsapp || SITE.rsvpWhatsApp);
+const registry = SITE.registry;
 $("registry-empty").hidden = registry.length > 0;
 registry.forEach(r => {
   const c = el("article", "card");
@@ -606,8 +613,8 @@ SITE.routes.forEach(r => {
   $("routes").append(li);
 });
 
-/* RSVP: open once a reply number is set */
-if (!SITE.rsvpWhatsApp) { $("rsvp-closed").hidden = false; $("rsvp-form").hidden = true; $("hero-rsvp").hidden = true; }
+/* RSVP: online form, replies go to the couple's Google Sheet */
+if (!SITE.rsvpOnline) { $("rsvp-closed").hidden = false; $("rsvp-form").hidden = true; $("hero-rsvp").hidden = true; }
 for (let i = 1; i <= SITE.maxGuests; i++) {
   const o = el("option", null, i === 1 ? "1 (just me)" : String(i)); o.value = i; $("f-guests").append(o);
 }
@@ -623,6 +630,7 @@ try {
 /* Preview: show the form filled in with a sample guest (only when the viewer has no draft) */
 if (SITE.preview && !form.elements.name.value) {
   form.elements.name.value = "Lerato Mokoena";
+  form.elements.email.value = "lerato@example.com";
   form.elements.phone.value = "082 123 4567";
   $("f-yes").checked = true;
   form.elements.guests.value = String(Math.min(2, SITE.maxGuests));
@@ -636,17 +644,20 @@ form.addEventListener("input", () => {
 });
 syncAttending();
 
-form.addEventListener("submit", (ev) => {
+form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
   const f = Object.fromEntries(new FormData(form));
-  const err = $("err"), name = (f.name || "").trim();
-  if (!name) { err.textContent = "Please add your full name so the couple knows who is replying."; err.hidden = false; $("f-name").focus(); return; }
-  if (!f.attending) { err.textContent = "Please choose whether you will attend."; err.hidden = false; $("f-yes").focus(); return; }
-  err.hidden = true;
+  const err = $("err"), name = (f.name || "").trim(), email = (f.email || "").trim();
+  const fail = (msg, id) => { err.textContent = msg; err.hidden = false; $("err-fallback").hidden = true; if (id) $(id).focus(); };
+  if (!name) return fail("Please add your full name so the couple knows who is replying.", "f-name");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail("Please enter a valid email address so we can send your confirmation.", "f-email");
+  if (!f.attending) return fail("Please choose whether you will attend.", "f-yes");
+  err.hidden = true; $("err-fallback").hidden = true;
   const yes = f.attending === "yes";
   const text = [
     "RSVP · Duduzile & Sipho · 19 & 20 December 2026",
     "Name: " + name,
+    "Email: " + email,
     f.phone && f.phone.trim() ? "Cell: " + f.phone.trim() : null,
     "Attending: " + (yes ? "Yes" : "No"),
     yes ? "Number attending: " + f.guests : null,
@@ -654,25 +665,39 @@ form.addEventListener("submit", (ev) => {
     f.note && f.note.trim() ? "Note: " + f.note.trim() : null
   ].filter(Boolean).join("\n");
   const first = name.split(" ")[0];
-  $("summary").textContent = text;
-  $("wa-link").href = waLink(text);
-  $("done-title").textContent = yes ? "THANK YOU" : "YOU WILL BE MISSED";
-  $("done-msg").textContent = yes
-    ? first + ", one last step: send your reply to the couple."
-    : first + ", thank you for letting the couple know. One last step: send your reply.";
-  form.hidden = true; $("done").hidden = false;
-  $("rsvp").scrollIntoView({ block: "start" });
+
+  const btn = $("send-btn"); btn.disabled = true; btn.textContent = "SENDING…";
+  const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 20000);
+  try {
+    const r = await fetch("/api/rsvp", {
+      method: "POST", headers: { "Content-Type": "application/json" }, signal: ctl.signal,
+      body: JSON.stringify({ name, email, phone: f.phone, attending: f.attending, guests: f.guests, diet: f.diet, note: f.note, website: f.website })
+    });
+    const out = await r.json().catch(() => ({}));
+    if (r.status === 400 && out.error) return fail(out.error);
+    if (!r.ok || !out.ok) throw new Error(out.error || "failed");
+    $("summary").textContent = text;
+    $("done-title").textContent = yes ? "THANK YOU" : "YOU WILL BE MISSED";
+    $("done-msg").textContent = yes
+      ? first + ", thank you. Your RSVP has reached the couple and your place is reserved."
+      : first + ", thank you for letting us know. Your reply has reached the couple.";
+    $("done-conf").textContent = out.confirmation === false
+      ? "We could not email you a receipt, but your reply has reached the couple. Please keep this page for your records."
+      : "A confirmation is on its way to " + email + ". If it does not arrive, please check your spam folder.";
+    form.hidden = true; $("done").hidden = false;
+    try { localStorage.removeItem(DRAFT); } catch (_) {}
+    $("rsvp").scrollIntoView({ block: "start" });
+  } catch (_) {
+    fail("We could not send your reply just now. Please check your connection and try again.");
+    if (SITE.rsvpEmail) {
+      $("err-mail").href = mailLink("RSVP · " + name + " · Duduzile & Sipho · 19 & 20 December 2026", text);
+      $("err-fallback").hidden = false;
+    }
+  } finally {
+    clearTimeout(to); btn.disabled = false; btn.textContent = "SEND RSVP";
+  }
 });
 $("edit-btn").addEventListener("click", () => { $("done").hidden = true; form.hidden = false; });
-$("copy-btn").addEventListener("click", async () => {
-  const btn = $("copy-btn");
-  try { await navigator.clipboard.writeText($("summary").textContent); btn.textContent = "COPIED"; }
-  catch (_) {
-    const r = document.createRange(); r.selectNodeContents($("summary"));
-    const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "SELECTED, PRESS COPY";
-  }
-  setTimeout(() => (btn.textContent = "COPY REPLY"), 2200);
-});
 
 /* Gallery: photos listed in gallery.json, published alongside this page */
 let photos = [], current = 0;

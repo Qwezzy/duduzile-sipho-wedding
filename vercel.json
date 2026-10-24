@@ -1,0 +1,3 @@
+{
+  "functions": { "api/rsvp.js": { "maxDuration": 30 } }
+}
