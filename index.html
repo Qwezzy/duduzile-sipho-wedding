@@ -269,7 +269,7 @@ footer .credit b { font-weight: 700; color: var(--ink); }
     <a class="logo" href="#top" aria-label="Duduzile and Sipho, back to top"><img src="logo.svg" width="322" height="231" alt=""></a>
     <div class="links">
       <a href="#rsvp">RSVP</a>
-      <a href="#registry">REGISTRY</a>
+      <a href="#registry">GIFTS</a>
       <a href="#stay">STAY</a>
       <a href="#directions">DIRECTIONS</a>
       <a href="#gallery">GALLERY</a>
@@ -375,7 +375,7 @@ footer .credit b { font-weight: 700; color: var(--ink); }
   <!-- Registry -->
   <section class="sheet pr" id="registry" aria-labelledby="reg-h">
     <p class="kicker">WITH GRATITUDE</p>
-    <h2 id="reg-h">Gift Registry</h2>
+    <h2 id="reg-h">Gifts</h2>
     <p class="lead" data-k="registryNote"></p>
     <div class="short-rule"></div>
     <div class="cards" id="registry-cards"></div>
@@ -464,11 +464,13 @@ const SITE = {
     { from: "Arrival", text: "Please arrive early. The programme times will be shared with the formal invitation." }
   ],
 
-  registryNote: "Your presence is the greatest gift. For those who have asked, here are a few ways to bless our new home.",
+  registryNote: "Your presence is the greatest gift to us. If you would like to contribute further, we would be thankful for a monetary gift or a voucher from the stores below.",
   registry: [
-    { title: "Yuppiechef Registry", meta: "HOME & KITCHEN", text: "Cookware, linen and the little things for our first home, delivered to us.", cta: "VIEW REGISTRY", link: "https://www.yuppiechef.com/registry" },
-    { title: "Honeymoon Fund", meta: "AFTER THE CELEBRATION", text: "Help us towards a slow, restful getaway once the guests have gone home.", whatsapp: "Hello, please may I have the banking details for the Duduzile & Sipho honeymoon fund?", cta: "REQUEST DETAILS" },
-    { title: "Wishing Well", meta: "ON THE DAY", text: "A wishing well will stand at the celebration for cards and envelopes." }
+    { title: "Bank Details", meta: "MONETARY GIFT",                          // confirmed by the couple
+      lines: ["Capitec Bank", "D.E. Masetlane", "Account: 1657446725", "Branch code: 470010"],
+      copy: "1657446725", cta: "COPY ACCOUNT NUMBER" },
+    { title: "Voucher Options", meta: "STORE VOUCHERS",                     // confirmed by the couple
+      lines: ["@home", "Mr Price Home", "Woolworths"] }
   ],
 
   stayNote: "Where to stay near Dindela. Mention the Duduzile & Sipho wedding when booking, and book early.",
@@ -520,8 +522,18 @@ const registry = SITE.registry.filter(r => !r.whatsapp || SITE.rsvpWhatsApp);
 $("registry-empty").hidden = registry.length > 0;
 registry.forEach(r => {
   const c = el("article", "card");
-  c.append(el("span", "meta", r.meta), el("h3", null, r.title), el("p", null, r.text));
-  if (r.link || r.whatsapp) {
+  c.append(el("span", "meta", r.meta), el("h3", null, r.title));
+  if (r.text) c.append(el("p", null, r.text));
+  (r.lines || []).forEach(t => c.append(el("p", null, t)));
+  if (r.copy) {
+    const b = el("button", "btn ghost", r.cta || "COPY"); b.type = "button";
+    b.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(r.copy); b.textContent = "COPIED"; }
+      catch (e) { b.textContent = r.copy; }
+      setTimeout(() => (b.textContent = r.cta || "COPY"), 2200);
+    });
+    c.append(b);
+  } else if (r.link || r.whatsapp) {
     const a = el("a", "btn ghost", r.cta);
     a.href = r.link || waLink(r.whatsapp); a.target = "_blank"; a.rel = "noopener";
     c.append(a);
