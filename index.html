@@ -235,8 +235,10 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { border-color
 @media (max-width: 440px) { .gallery { gap: 6px; } }
 .gallery button { padding: 0; border: 0; background: var(--paper-2); cursor: zoom-in; aspect-ratio: 1; overflow: hidden; }
 .gallery button.feature { grid-column: span 2; grid-row: span 2; }
-.gallery img { width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
-.gallery button:hover img { transform: scale(1.04); }
+.gallery img { width: 100%; height: 100%; object-fit: cover; object-position: center 28%; display: block; transition: transform .6s cubic-bezier(.2,.7,.2,1), filter .6s ease; }
+/* black and white until hovered, focused or opened full size (the lightbox shows the colour original) */
+.gallery img { filter: grayscale(1) contrast(1.04); }
+.gallery button:hover img, .gallery button:focus-visible img { filter: none; transform: scale(1.04); }
 .gallery button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .empty {
   border: 1px dashed var(--rule); padding: 40px 20px; text-align: center; display: grid; gap: 10px; justify-items: center;
