@@ -475,6 +475,9 @@ const SITE = {
 
   stayNote: "Where to stay near Dindela. Mention the Duduzile & Sipho wedding when booking, and book early.",
   stays: [
+    { name: "Esibayeni Guest House", meta: "MONSTERLUS · ≈ 3 KM FROM DINDELA", text: "Guest house with a pool and breakfast, on the R579 in Monsterlus. Ask them for a location pin when you book: guests report the Google pin can be off.",
+      phone: "+27637121494", phoneLabel: "063 712 1494", wa: "27637121494",
+      map: "https://www.google.com/maps/search/?api=1&query=Esibayeni%20Guest%20House&query_place_id=ChIJIXbvSE2_wR4RPwwVpdb85rM", link: "" },
     { name: "Kingdoms Lodge and Restaurant", meta: "GROBLERSDAL · ≈ 35 KM FROM DINDELA", text: "Lodge rooms with an on-site restaurant, on the N11 outside Groblersdal.",
       phone: "+27131102013", phoneLabel: "013 110 2013",
       map: "https://www.google.com/maps/search/?api=1&query=Kingdoms%20Lodge%20and%20Restaurant&query_place_id=ChIJe4UthuxKwB4RNMPz_RQ6BaA", link: "" }
@@ -552,6 +555,7 @@ SITE.stays.forEach(s => {
   const row = el("div", "stay-actions"); row.style.cssText = "display:flex;flex-wrap:wrap;gap:10px;justify-content:center";
   row.append(a);
   if (s.phone) { const t = el("a", "btn ghost", "CALL " + (s.phoneLabel || s.phone)); t.href = "tel:" + s.phone; row.append(t); }
+  if (s.wa) { const w = el("a", "btn ghost", "WHATSAPP"); w.href = "https://wa.me/" + s.wa + "?text=" + encodeURIComponent("Hello, I'd like to book a room for the Duduzile & Sipho wedding, 19-20 December 2026."); w.target = "_blank"; w.rel = "noopener"; row.append(w); }
   c.append(row);
   $("stay-cards").append(c);
 });
