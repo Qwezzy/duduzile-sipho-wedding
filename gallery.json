@@ -1,81 +1,75 @@
 [
  {
-  "src": "photos/photo-01.jpg",
-  "alt": "Duduzile and Sipho together at home"
+  "src": "photos/couple-01.jpg",
+  "thumb": "photos/thumb/couple-01.jpg",
+  "alt": "Duduzile and Sipho in a rose garden",
+  "pos": "45% 25%",
+  "feature": true
  },
  {
-  "src": "photos/photo-02.jpg",
-  "alt": "Duduzile in a white shawl reading NaMkoneni Ka Mahlangu"
+  "src": "photos/couple-02.jpg",
+  "thumb": "photos/thumb/couple-02.jpg",
+  "alt": "Duduzile and Sipho sharing a smile by candlelight",
+  "pos": "50% 30%"
  },
  {
-  "src": "photos/photo-03.jpg",
-  "alt": "Sipho in a navy shirt and sunglasses",
-  "pos": "center 20%"
+  "src": "photos/couple-03.jpg",
+  "thumb": "photos/thumb/couple-03.jpg",
+  "alt": "Duduzile and Sipho on a terrace above the sea",
+  "pos": "45% 30%"
  },
  {
-  "src": "photos/photo-04.jpg",
-  "alt": "Duduzile in a white shawl and traditional skirt"
+  "src": "photos/couple-04.jpg",
+  "thumb": "photos/thumb/couple-04.jpg",
+  "alt": "Duduzile and Sipho under garden lights in the evening",
+  "pos": "50% 14%"
  },
  {
-  "src": "photos/photo-05.jpg",
-  "alt": "Sipho smiling, seated on a stool"
+  "src": "photos/couple-05.jpg",
+  "thumb": "photos/thumb/couple-05.jpg",
+  "alt": "Duduzile and Sipho laughing together",
+  "pos": "60% 25%"
  },
  {
-  "src": "photos/photo-06.jpg",
-  "alt": "Duduzile in a white and black traditional dress",
-  "pos": "center 15%"
+  "src": "photos/couple-06.jpg",
+  "thumb": "photos/thumb/couple-06.jpg",
+  "alt": "Duduzile and Sipho in evening wear",
+  "pos": "45% 30%"
  },
  {
-  "src": "photos/photo-07.jpg",
-  "alt": "Sipho in a blue shirt, hand on chin"
+  "src": "photos/couple-07.jpg",
+  "thumb": "photos/thumb/couple-07.jpg",
+  "alt": "Duduzile with her bouquet and Sipho at sunset on the water",
+  "pos": "50% 14%"
  },
  {
-  "src": "photos/photo-08.jpg",
-  "alt": "Duduzile in a studio portrait",
-  "pos": "center 20%"
+  "src": "photos/couple-08.jpg",
+  "thumb": "photos/thumb/couple-08.jpg",
+  "alt": "Duduzile and Sipho among autumn vines",
+  "pos": "45% 25%"
  },
  {
-  "src": "photos/photo-09.jpg",
-  "alt": "Sipho laughing at his phone"
+  "src": "photos/couple-09.jpg",
+  "thumb": "photos/thumb/couple-09.jpg",
+  "alt": "Duduzile and Sipho in soft afternoon light",
+  "pos": "50% 35%"
  },
  {
-  "src": "photos/photo-10.jpg",
-  "alt": "Duduzile in a blue blanket and traditional skirt"
+  "src": "photos/couple-10.jpg",
+  "thumb": "photos/thumb/couple-10.jpg",
+  "alt": "Duduzile and Sipho on a garden bench",
+  "pos": "50% 30%"
  },
  {
-  "src": "photos/photo-11.jpg",
-  "alt": "Sipho smiling, arms crossed",
-  "pos": "center 30%"
+  "src": "photos/couple-11.jpg",
+  "thumb": "photos/thumb/couple-11.jpg",
+  "alt": "Duduzile and Sipho with the city lights behind them",
+  "pos": "55% 25%"
  },
  {
-  "src": "photos/photo-12.jpg",
-  "alt": "Duduzile and a little girl in matching beige"
- },
- {
-  "src": "photos/photo-13.jpg",
-  "alt": "Sipho, hand on chin, against the sky"
- },
- {
-  "src": "photos/photo-14.jpg",
-  "alt": "Duduzile in a black tulle skirt and pink heels",
-  "pos": "center 15%"
- },
- {
-  "src": "photos/photo-15.jpg",
-  "alt": "Duduzile in a black dress in the garden"
- },
- {
-  "src": "photos/photo-16.jpg",
-  "alt": "Duduzile and a little girl in matching burgundy"
- },
- {
-  "src": "photos/photo-17.jpg",
-  "alt": "Duduzile in white, the hills behind her",
-  "pos": "35% center"
- },
- {
-  "src": "photos/photo-18.jpg",
-  "alt": "Duduzile in white with a pink handbag",
-  "pos": "30% center"
+  "src": "photos/couple-12.jpg",
+  "thumb": "photos/thumb/couple-12.jpg",
+  "alt": "Duduzile and Sipho in the studio",
+  "pos": "50% 14%"
  }
 ]
