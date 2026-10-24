@@ -26,3 +26,13 @@ Set `SITE.rsvpEmail` in `index.html` to the couple's address to show a "send fro
 Approval is off (`APPROVAL = false` in `Code.gs`); set it to `true` and re-run `setup` if the couple want to approve each guest.
 Gmail sends up to about 100 confirmations a day from a free account. Event wording in the confirmation is at the top of `Code.gs`.
 
+
+## Horizontal + 3D variant (branch `horizontal-3d`, not live)
+
+A sales demo of a different layout, on its own branch. `main` and the live site are unchanged.
+- `horizontal.css`: the sections become cards in a sideways track (scroll-snap). Long cards scroll inside.
+- `hz.js`: wheel and arrow keys step one card at a time; pager dots, nav links and deep links slide to the right card.
+- `scene.js`: Three.js backdrop (three@0.160.0 from jsDelivr via an import map): two interlocking gold rings with a solitaire,
+  falling petals in chocolate, champagne and white, and gold dust. The camera pans with the track and tilts with the pointer.
+  One still frame with reduced motion; plain gradient if WebGL is unavailable.
+- Switch it off on any page by removing `class="hz"` from `<html>` and the three script/link tags.

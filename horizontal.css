@@ -1,0 +1,93 @@
+/* =========================================================
+   Horizontal variant: each section is a card in a sideways track,
+   floating over a Three.js scene (scene.js). Loaded after the base styles.
+   ========================================================= */
+html.hz, html.hz body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+html.hz body { background: radial-gradient(120% 90% at 30% 20%, #FCFAF6 0%, #F2EADD 55%, #E4D5BD 100%); }
+
+/* WebGL stage sits behind everything */
+#stage { position: fixed; inset: 0; z-index: 0; display: block; width: 100vw; height: 100dvh; pointer-events: none; }
+
+html.hz .nav { position: fixed; left: 0; right: 0; top: 0; background: rgba(252, 250, 246, .78); }
+
+/* The track */
+html.hz .wrap {
+  position: relative; z-index: 1;
+  max-width: none; margin: 0; height: 100dvh;
+  display: flex; align-items: center; gap: 0;
+  padding: 64px 0 0;                          /* room for the fixed nav */
+  overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  scrollbar-width: none; overscroll-behavior-x: contain;
+}
+html.hz .wrap::-webkit-scrollbar { display: none; }
+@media (prefers-reduced-motion: reduce) { html.hz .wrap { scroll-behavior: auto; } }
+
+/* One card per viewport-wide slot, centred, scrolling inside when it is taller than the screen */
+html.hz .wrap > .sheet, html.hz .wrap > footer {
+  --w: min(560px, 88vw);
+  flex: 0 0 var(--w);
+  margin-inline: calc((100vw - var(--w)) / 2);
+  max-height: calc(100dvh - 64px - 56px);
+  overflow-y: auto; overscroll-behavior-y: contain;
+  scroll-snap-align: center; scroll-snap-stop: always;
+  scrollbar-width: thin; scrollbar-color: var(--rule) transparent;
+  background-color: #FCFAF6;
+  /* the double hairline frame as inset shadows, so it stays put while a long card scrolls */
+  box-shadow:
+    inset 0 0 0 14px #FCFAF6, inset 0 0 0 15px var(--rule),
+    inset 0 0 0 19px #FCFAF6, inset 0 0 0 20px var(--rule),
+    0 40px 80px -40px rgba(58, 35, 23, .45), 0 2px 6px rgba(58, 35, 23, .08);
+}
+html.hz .wrap > .sheet::before, html.hz .wrap > .sheet::after { display: none; }
+html.hz .wrap > .sheet { background-attachment: local; }
+
+/* Hero: artwork and details side by side on wide screens */
+html.hz .wrap > .hero { --w: min(560px, 88vw); padding: 0; box-shadow: 0 40px 80px -40px rgba(58, 35, 23, .45), 0 2px 6px rgba(58, 35, 23, .08); }
+/* Wide screens: the opening card sits right of centre, leaving the left third to the 3D rings */
+@media (min-width: 900px) and (min-aspect-ratio: 5/4) {
+  html.hz .wrap > .hero {
+    --w: 60vw; margin-left: 34vw; margin-right: 6vw; scroll-margin-left: 34vw;
+    display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: stretch; overflow: hidden;
+  }
+  html.hz .hero .hero-art, html.hz .hero > img { align-self: center; }
+  html.hz .hero img { width: 100%; height: auto; max-height: calc(100dvh - 64px - 56px); object-fit: cover; }
+  html.hz .hero-foot { border-top: 0; border-left: 1px solid var(--rule); align-content: center; padding: 32px 24px; }
+}
+
+html.hz .wrap > footer {
+  --w: min(420px, 84vw);
+  background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+  padding: 40px 0;
+}
+html.hz .preview-note { position: fixed; left: 50%; top: 70px; transform: translateX(-50%); z-index: 3; background: rgba(252,250,246,.9); padding: 4px 12px; font-size: 10px; white-space: nowrap; }
+
+/* Pager: arrows, dots and a first-visit hint */
+.pager {
+  position: fixed; z-index: 5; left: 50%; bottom: max(14px, env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 14px;
+  padding: 6px 10px; border-radius: 999px;
+  background: rgba(252, 250, 246, .82); border: 1px solid var(--rule);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.pager button {
+  appearance: none; border: 0; background: none; cursor: pointer; color: var(--ink);
+  font: 18px/1 var(--serif); width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%;
+}
+.pager button:hover { background: rgba(168, 132, 90, .14); }
+.pager button:disabled { opacity: .3; cursor: default; background: none; }
+.pager button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.dots { display: flex; gap: 8px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--rule); transition: background .3s, transform .3s; cursor: pointer; }
+.dots i.on { background: var(--seal); transform: scale(1.35); }
+.hint {
+  position: fixed; z-index: 5; right: max(18px, 3vw); bottom: max(22px, env(safe-area-inset-bottom, 0px));
+  font-family: var(--display); font-size: 11px; letter-spacing: .3em; color: var(--ink-soft);
+  pointer-events: none; transition: opacity .6s;
+}
+.hint::after { content: "→"; margin-left: 10px; display: inline-block; animation: hint-nudge 1.6s ease-in-out infinite; }
+@keyframes hint-nudge { 50% { transform: translateX(6px); } }
+.hint.gone { opacity: 0; }
+@media (max-width: 620px) { .hint { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hint::after { animation: none; } }

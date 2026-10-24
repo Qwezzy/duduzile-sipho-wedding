@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-ZA">
+<html class="hz" lang="en-ZA">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -13,6 +13,7 @@
 <style>html{color-scheme:light}img{max-width:100%}</style>
 </head>
 <body>
+<canvas id="stage" aria-hidden="true"></canvas>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -263,6 +264,7 @@ footer .credit { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(
 footer .credit b { font-weight: 700; color: var(--ink); }
 </style>
 <link rel="stylesheet" href="motion.css">
+<link rel="stylesheet" href="horizontal.css">
 <script>(function(d){var r=d.documentElement;if(window.IntersectionObserver&&!matchMedia("(prefers-reduced-motion: reduce)").matches){r.className+=" mo";setTimeout(function(){if(!window.__mo)r.className=r.className.replace(/\bmo\b/,"")},4000)}})(document)</script>
 
 <nav class="nav" aria-label="Sections">
@@ -733,6 +735,14 @@ document.addEventListener("keydown", (e) => {
 });
 </script>
 <script src="motion.js" defer></script>
+<script src="hz.js" defer></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="scene.js"></script>
 
 </body>
 </html>
