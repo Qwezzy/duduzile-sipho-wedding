@@ -471,11 +471,11 @@ const SITE = {
     { title: "Wishing Well", meta: "ON THE DAY", text: "A wishing well will stand at the celebration for cards and envelopes." }
   ],
 
-  stayNote: "A few places within reach of Dindela. Mention the Duduzile & Sipho wedding when booking.",
+  stayNote: "Where to stay near Dindela. Mention the Duduzile & Sipho wedding when booking, and book early.",
   stays: [
-    { name: "Marula Garden Lodge", meta: "≈ 10 KM · R850–R1 200 / NIGHT", text: "Quiet garden rooms with breakfast, a short drive from the venue.", link: "" },
-    { name: "Bushveld Rest Guesthouse", meta: "≈ 25 KM · R900–R1 400 / NIGHT", text: "Family rooms and a pool. Ask about a group rate for wedding guests.", link: "" },
-    { name: "Sable Ridge Lodge", meta: "≈ 40 KM · R1 100–R1 700 / NIGHT", text: "Self-catering chalets, good for families and longer stays.", link: "" }
+    { name: "Kingdoms Lodge and Restaurant", meta: "GROBLERSDAL · ≈ 35 KM FROM DINDELA", text: "Lodge rooms with an on-site restaurant, on the N11 outside Groblersdal.",
+      phone: "+27131102013", phoneLabel: "013 110 2013",
+      map: "https://www.google.com/maps/search/?api=1&query=Kingdoms%20Lodge%20and%20Restaurant&query_place_id=ChIJe4UthuxKwB4RNMPz_RQ6BaA", link: "" }
   ]
 };
 
@@ -535,9 +535,12 @@ SITE.stays.forEach(s => {
   const c = el("article", "card");
   c.append(el("span", "meta", s.meta), el("h3", null, s.name), el("p", null, s.text));
   const a = el("a", "btn ghost", s.link ? "VIEW & BOOK" : "FIND ON MAPS");
-  a.href = s.link || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.name + " " + SITE.area);
+  a.href = s.link || s.map || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.name + " " + SITE.area);
   a.target = "_blank"; a.rel = "noopener";
-  c.append(a);
+  const row = el("div", "stay-actions"); row.style.cssText = "display:flex;flex-wrap:wrap;gap:10px;justify-content:center";
+  row.append(a);
+  if (s.phone) { const t = el("a", "btn ghost", "CALL " + (s.phoneLabel || s.phone)); t.href = "tel:" + s.phone; row.append(t); }
+  c.append(row);
   $("stay-cards").append(c);
 });
 
