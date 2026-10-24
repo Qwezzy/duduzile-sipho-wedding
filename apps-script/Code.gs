@@ -276,11 +276,11 @@ function sendDigest() {
   const head = yes.reduce((s, r) => s + (Number(r[C.NUM - 1]) || 0), 0);
   const lines = fresh.map(r => "- " + r[C.NAME - 1] + ": " + r[C.ATT - 1] + (r[C.ATT - 1] === "Yes" ? " (" + r[C.NUM - 1] + ")" : "") + (r[C.DIET - 1] && r[C.DIET - 1] !== "None" ? ", " + r[C.DIET - 1] : ""));
   const pending = APPROVAL ? data.filter(r => r[C.STATUS - 1] === "Pending").length : 0;
-  const body = [fresh.length + " new or updated RSVP(s):", ""].concat(lines).concat(["",
+  const body = [EVENT.couple + ": " + fresh.length + " new or updated RSVP(s):", ""].concat(lines).concat(["",
     "Totals so far: " + data.length + " replies, " + yes.length + " attending (" + head + " people), " + (data.length - yes.length) + " declined."]
     .concat(APPROVAL ? ["Waiting for your decision: " + pending + ". Open the sheet and set Status to Approved or Declined."] : [])
     .concat(["", "Sheet: " + ss.getUrl()])).join("\n");
-  MailApp.sendEmail({ to: DIGEST_TO || Session.getEffectiveUser().getEmail(), subject: "RSVP digest: " + fresh.length + " new · " + head + " attending" + (APPROVAL ? " · " + pending + " to approve" : ""), body, name: SENDER_NAME });
+  MailApp.sendEmail({ to: DIGEST_TO || Session.getEffectiveUser().getEmail(), subject: EVENT.couple + " RSVP digest: " + fresh.length + " new · " + head + " attending" + (APPROVAL ? " · " + pending + " to approve" : ""), body, name: SENDER_NAME });
 }
 
 /* Optional check: adds a TEST row and sends a confirmation to the address below. Delete the row afterwards. */
