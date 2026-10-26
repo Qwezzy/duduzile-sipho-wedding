@@ -7,9 +7,21 @@
   "feature": true
  },
  {
+  "src": "photos/real-01.jpg",
+  "thumb": "photos/thumb/real-01.jpg",
+  "alt": "Duduzile and Sipho together at home",
+  "pos": "50% 35%"
+ },
+ {
   "src": "photos/couple-02.jpg",
   "thumb": "photos/thumb/couple-02.jpg",
   "alt": "Duduzile and Sipho sharing a smile by candlelight",
+  "pos": "50% 30%"
+ },
+ {
+  "src": "photos/real-02.jpg",
+  "thumb": "photos/thumb/real-02.jpg",
+  "alt": "Duduzile in a white shawl reading NaMkoneni Ka Mahlangu",
   "pos": "50% 30%"
  },
  {
@@ -19,10 +31,22 @@
   "pos": "45% 30%"
  },
  {
+  "src": "photos/real-05.jpg",
+  "thumb": "photos/thumb/real-05.jpg",
+  "alt": "Sipho smiling, seated on a stool",
+  "pos": "50% 25%"
+ },
+ {
   "src": "photos/couple-04.jpg",
   "thumb": "photos/thumb/couple-04.jpg",
   "alt": "Duduzile and Sipho under garden lights in the evening",
   "pos": "50% 14%"
+ },
+ {
+  "src": "photos/real-06.jpg",
+  "thumb": "photos/thumb/real-06.jpg",
+  "alt": "Duduzile in a white and black traditional dress",
+  "pos": "50% 12%"
  },
  {
   "src": "photos/couple-05.jpg",
@@ -37,10 +61,23 @@
   "pos": "45% 30%"
  },
  {
+  "src": "photos/real-09.jpg",
+  "thumb": "photos/thumb/real-09.jpg",
+  "alt": "Sipho laughing at his phone",
+  "pos": "50% 25%"
+ },
+ {
   "src": "photos/couple-07.jpg",
   "thumb": "photos/thumb/couple-07.jpg",
   "alt": "Duduzile with her bouquet and Sipho at sunset on the water",
   "pos": "50% 14%"
+ },
+ {
+  "src": "photos/real-17.jpg",
+  "thumb": "photos/thumb/real-17.jpg",
+  "alt": "Duduzile in white, the hills behind her",
+  "pos": "30% 40%",
+  "wide": true
  },
  {
   "src": "photos/couple-08.jpg",
@@ -49,10 +86,22 @@
   "pos": "45% 25%"
  },
  {
+  "src": "photos/real-10.jpg",
+  "thumb": "photos/thumb/real-10.jpg",
+  "alt": "Duduzile in a blue blanket and traditional skirt",
+  "pos": "50% 20%"
+ },
+ {
   "src": "photos/couple-09.jpg",
   "thumb": "photos/thumb/couple-09.jpg",
   "alt": "Duduzile and Sipho in soft afternoon light",
   "pos": "50% 35%"
+ },
+ {
+  "src": "photos/real-08.jpg",
+  "thumb": "photos/thumb/real-08.jpg",
+  "alt": "Duduzile in a studio portrait",
+  "pos": "50% 18%"
  },
  {
   "src": "photos/couple-10.jpg",
