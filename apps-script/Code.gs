@@ -203,7 +203,7 @@ function sendConfirmation(g, status) {
     yes ? ["Number attending", String(g.guests)] : null,
     yes && g.diet !== "None" ? ["Dietary needs", g.diet] : null,
     g.phone ? ["Cell", g.phone] : null,
-    g.note ? ["Your note", g.note] : null
+    g.note ? ["Your message", g.note] : null
   ].filter(Boolean);
   const pending = APPROVAL && yes && status !== "Approved";
   const intro = !yes

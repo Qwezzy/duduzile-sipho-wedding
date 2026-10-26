@@ -380,8 +380,9 @@ footer .credit b { font-weight: 700; color: var(--ink); }
         </div>
       </div>
       <div class="field">
-        <label class="label" for="f-note">A NOTE FOR THE COUPLE</label>
-        <textarea id="f-note" name="note" placeholder="Optional"></textarea>
+        <label class="label" for="f-note">WELL WISHES FOR DUDUZILE &amp; SIPHO</label>
+        <p class="note" id="f-note-help" style="margin:0;font-size:15px;line-height:1.45">Optional. Leave the couple a message of love, a blessing or a few words of advice for their marriage. They will read every one. If there is something they should know, such as an allergy or that you may arrive late, add it here too.</p>
+        <textarea id="f-note" name="note" aria-describedby="f-note-help" style="min-height:120px" placeholder="e.g. Congratulations, Duduzile and Sipho! Wishing you a lifetime of love, laughter and blessings."></textarea>
       </div>
       <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
       <p class="err" id="err" role="alert" hidden></p>
@@ -685,7 +686,7 @@ form.addEventListener("submit", async (ev) => {
     "Attending: " + (yes ? "Yes" : "No"),
     yes ? "Number attending: " + f.guests : null,
     yes && f.diet !== "None" ? "Dietary: " + f.diet : null,
-    f.note && f.note.trim() ? "Note: " + f.note.trim() : null
+    f.note && f.note.trim() ? "Message: " + f.note.trim() : null
   ].filter(Boolean).join("\n");
   const first = name.split(" ")[0];
 
