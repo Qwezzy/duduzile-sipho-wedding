@@ -6,6 +6,7 @@
 <title>Duduzile &amp; Sipho</title>
 <meta name="description" content="Duduzile and Sipho. 19 and 20 December 2026, Dindela, Limpopo. RSVP, gifts, places to stay, directions and gallery.">
 <meta name="theme-color" content="#FCFAF6">
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="canonical" href="https://www.duduzilewedssipho.co.za/">
 <meta property="og:type" content="website">
@@ -337,6 +338,7 @@ footer .credit b { font-weight: 700; color: var(--ink); }
     <p class="kicker" data-k="rsvpByLine"></p>
     <h2 id="rsvp-h">Kindly Reply</h2>
     <div class="short-rule"></div>
+    <p class="note personal" id="rsvp-personal" style="margin:0 0 24px;text-align:center">This invitation is personal. Please reply only for the guests invited on it, and do not share this link with anyone.</p>
 
     <div class="empty" id="rsvp-closed" hidden>
       <p>RSVPs open with the formal invitation.</p>
@@ -393,6 +395,7 @@ footer .credit b { font-weight: 700; color: var(--ink); }
       <p id="done-msg"></p>
       <p class="note" id="done-conf"></p>
       <div class="summary" id="summary"></div>
+      <p class="note personal" style="text-align:center">Please do not share this link with anyone.</p>
       <button class="textlink" type="button" id="edit-btn">Change my reply</button>
     </div>
   </section>
@@ -480,7 +483,8 @@ const SITE = {
   colours: "Chocolate brown, champagne & white",         // wedding colour scheme, confirmed
 
   rsvpBy: "30 November 2026",                            // confirmed by the couple
-  rsvpOnline: true,                                      // replies go to /api/rsvp, then the couple's Google Sheet (see README)
+  rsvpOnline: true,
+  approval: true,     // the couple approve each "Yes" in the RSVP sheet; guests are emailed once approved (APPROVAL in apps-script/Code.gs)                                      // replies go to /api/rsvp, then the couple's Google Sheet (see README)
   rsvpEmail: "phasha8@gmail.com",                        // only used in the "send from your own email app" fallback if the form cannot send
   maxGuests: 2,
 
@@ -698,11 +702,15 @@ form.addEventListener("submit", async (ev) => {
     $("summary").textContent = text;
     $("done-title").textContent = yes ? "THANK YOU" : "YOU WILL BE MISSED";
     $("done-msg").textContent = yes
-      ? first + ", thank you. Your RSVP has reached the couple and your place is reserved."
+      ? (SITE.approval
+          ? first + ", thank you. We have received your RSVP. The couple will review it and email you once your place is confirmed."
+          : first + ", thank you. Your RSVP has reached the couple and your place is reserved.")
       : first + ", thank you for letting us know. Your reply has reached the couple.";
     $("done-conf").textContent = out.confirmation === false
       ? "We could not email you a receipt, but your reply has reached the couple. Please keep this page for your records."
-      : "A confirmation is on its way to " + email + ". If it does not arrive, please check your spam folder.";
+      : (SITE.approval && yes
+          ? "A receipt is on its way to " + email + ". Your place is confirmed only when you receive the approval email. If nothing arrives, please check your spam folder."
+          : "A confirmation is on its way to " + email + ". If it does not arrive, please check your spam folder.");
     form.hidden = true; $("done").hidden = false;
     try { localStorage.removeItem(DRAFT); } catch (_) {}
     $("rsvp").scrollIntoView({ block: "start" });

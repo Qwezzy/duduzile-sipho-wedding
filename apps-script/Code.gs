@@ -12,7 +12,7 @@ const REPLY_TO = "";                  // where guests' replies to the confirmati
 const DIGEST_TO = "";                 // who gets the daily digest. Blank = the owner of this script
 const SENDER_NAME = "Duduzile & Sipho";
 const RSVP_CONTACT = "";                 // optional: a person named in the confirmation as the RSVP contact
-const APPROVAL = false;               // true: the couple approve each "Yes" reply in the sheet before the guest is confirmed
+const APPROVAL = true;                // true: the couple approve each "Yes" reply in the sheet before the guest is confirmed
 const SEND_DECLINE_EMAIL = true;      // true: a kind email also goes out when Status is set to Declined
 
 const EVENT = {

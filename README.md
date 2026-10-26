@@ -23,6 +23,6 @@ One-time setup, from the Google account that should own the sheet (the couple's 
 5. In Vercel (Production) set `APPS_SCRIPT_URL` to that URL and `APPS_SCRIPT_SECRET` to the same random string, then redeploy.
 
 Set `SITE.rsvpEmail` in `index.html` to the couple's address to show a "send from your own email app" fallback if the form cannot send.
-Approval is off (`APPROVAL = false` in `Code.gs`); set it to `true` and re-run `setup` if the couple want to approve each guest.
+Approval is on (`APPROVAL = true` in `Code.gs`, `approval: true` in `SITE`): each "Yes" starts as Pending; set Status to Approved or Declined in the sheet and the guest is emailed once per decision. After changing the script: run `setup`, then Deploy > Manage deployments > pencil > New version (the /exec URL stays the same).
 Gmail sends up to about 100 confirmations a day from a free account. Event wording in the confirmation is at the top of `Code.gs`.
 
