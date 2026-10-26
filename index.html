@@ -7,13 +7,13 @@
 <meta name="description" content="Duduzile and Sipho. 19 and 20 December 2026, Dindela, Limpopo. RSVP, gifts, places to stay, directions and gallery.">
 <meta name="theme-color" content="#FCFAF6">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="canonical" href="https://duduzile-sipho-wedding.vercel.app/">
+<link rel="canonical" href="https://www.duduzilewedssipho.co.za/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Duduzile &amp; Sipho">
-<meta property="og:url" content="https://duduzile-sipho-wedding.vercel.app/">
+<meta property="og:url" content="https://www.duduzilewedssipho.co.za/">
 <meta property="og:title" content="Duduzile &amp; Sipho">
 <meta property="og:description" content="You are invited to the wedding of Duduzile and Sipho. 19 and 20 December 2026, Dindela, Limpopo. Kindly reply by 30 November.">
-<meta property="og:image" content="https://duduzile-sipho-wedding.vercel.app/save-the-date.jpg">
+<meta property="og:image" content="https://www.duduzilewedssipho.co.za/save-the-date.jpg">
 <meta property="og:image:width" content="1254">
 <meta property="og:image:height" content="1254">
 <meta property="og:image:alt" content="Duduzile and Sipho wedding invitation">
@@ -509,7 +509,6 @@ const SITE = {
 
 const $ = (id) => document.getElementById(id);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-const waLink = (text) => "https://wa.me/?text=" + encodeURIComponent(text);
 const mailLink = (subject, text) => "mailto:" + SITE.rsvpEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(text.replace(/\n/g, "\r\n"));
 
 $("preview-note").hidden = !SITE.preview;
@@ -561,9 +560,9 @@ registry.forEach(r => {
       setTimeout(() => (b.textContent = r.cta || "COPY"), 2200);
     });
     c.append(b);
-  } else if (r.link || r.whatsapp) {
+  } else if (r.link) {
     const a = el("a", "btn ghost", r.cta);
-    a.href = r.link || waLink(r.whatsapp); a.target = "_blank"; a.rel = "noopener";
+    a.href = r.link; a.target = "_blank"; a.rel = "noopener";
     c.append(a);
   }
   $("registry-cards").append(c);

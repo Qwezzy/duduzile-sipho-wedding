@@ -23,7 +23,7 @@ const EVENT = {
     ["Sunday 20 December, 12:00", "The Groom's Home, Dindela, Limpopo"]
   ],
   dress: "Formal or traditional wear (colours: chocolate brown, champagne & white)",
-  site: "https://duduzile-sipho-wedding.vercel.app/#directions"
+  site: "https://www.duduzilewedssipho.co.za/#directions"
 };
 const MAX_GUESTS = 2;
 const DIETS = ["None", "Vegetarian", "Vegan", "Halaal", "No pork", "Allergy (see note)"];
